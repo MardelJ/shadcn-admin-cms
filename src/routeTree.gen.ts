@@ -28,6 +28,7 @@ import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authen
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
 import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
+import { Route as AuthenticatedOrganizationsIndexRouteImport } from './routes/_authenticated/organizations/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
@@ -39,6 +40,12 @@ import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_auth
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
+import { Route as AuthenticatedOrganizationsSlugRouteRouteImport } from './routes/_authenticated/organizations/$slug/route'
+import { Route as AuthenticatedOrganizationsSlugIndexRouteImport } from './routes/_authenticated/organizations/$slug/index'
+import { Route as AuthenticatedOrganizationsSlugMembersRouteImport } from './routes/_authenticated/organizations/$slug/members'
+import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/route'
+import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugIndexRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/index'
+import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/collections/index'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -134,6 +141,12 @@ const AuthenticatedSettingsIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedOrganizationsIndexRoute =
+  AuthenticatedOrganizationsIndexRouteImport.update({
+    id: '/organizations/',
+    path: '/organizations/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHelpCenterIndexRoute =
   AuthenticatedHelpCenterIndexRouteImport.update({
     id: '/help-center/',
@@ -196,6 +209,45 @@ const AuthenticatedErrorsErrorRoute =
     path: '/errors/$error',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedOrganizationsSlugRouteRoute =
+  AuthenticatedOrganizationsSlugRouteRouteImport.update({
+    id: '/organizations/$slug',
+    path: '/organizations/$slug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedOrganizationsSlugIndexRoute =
+  AuthenticatedOrganizationsSlugIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedOrganizationsSlugRouteRoute,
+  } as any)
+const AuthenticatedOrganizationsSlugMembersRoute =
+  AuthenticatedOrganizationsSlugMembersRouteImport.update({
+    id: '/members',
+    path: '/members',
+    getParentRoute: () => AuthenticatedOrganizationsSlugRouteRoute,
+  } as any)
+const AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute =
+  AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteImport.update({
+    id: '/$workspaceSlug',
+    path: '/$workspaceSlug',
+    getParentRoute: () => AuthenticatedOrganizationsSlugRouteRoute,
+  } as any)
+const AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute =
+  AuthenticatedOrganizationsSlugWorkspaceSlugIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute,
+  } as any)
+const AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute =
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRouteImport.update(
+    {
+      id: '/collections/',
+      path: '/collections/',
+      getParentRoute: () =>
+        AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute,
+    } as any,
+  )
 
 export interface FileRoutesByFullPath {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -211,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/organizations/$slug': typeof AuthenticatedOrganizationsSlugRouteRouteWithChildren
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
@@ -222,9 +275,15 @@ export interface FileRoutesByFullPath {
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/organizations': typeof AuthenticatedOrganizationsIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/organizations/$slug/$workspaceSlug': typeof AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteWithChildren
+  '/organizations/$slug/members': typeof AuthenticatedOrganizationsSlugMembersRoute
+  '/organizations/$slug/': typeof AuthenticatedOrganizationsSlugIndexRoute
+  '/organizations/$slug/$workspaceSlug/': typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute
+  '/organizations/$slug/$workspaceSlug/collections': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -250,9 +309,14 @@ export interface FileRoutesByTo {
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
+  '/organizations': typeof AuthenticatedOrganizationsIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/organizations/$slug/members': typeof AuthenticatedOrganizationsSlugMembersRoute
+  '/organizations/$slug': typeof AuthenticatedOrganizationsSlugIndexRoute
+  '/organizations/$slug/$workspaceSlug': typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute
+  '/organizations/$slug/$workspaceSlug/collections': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -272,6 +336,7 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/organizations/$slug': typeof AuthenticatedOrganizationsSlugRouteRouteWithChildren
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
@@ -283,9 +348,15 @@ export interface FileRoutesById {
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
+  '/_authenticated/organizations/': typeof AuthenticatedOrganizationsIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
+  '/_authenticated/organizations/$slug/$workspaceSlug': typeof AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteWithChildren
+  '/_authenticated/organizations/$slug/members': typeof AuthenticatedOrganizationsSlugMembersRoute
+  '/_authenticated/organizations/$slug/': typeof AuthenticatedOrganizationsSlugIndexRoute
+  '/_authenticated/organizations/$slug/$workspaceSlug/': typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute
+  '/_authenticated/organizations/$slug/$workspaceSlug/collections/': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -303,6 +374,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/organizations/$slug'
     | '/errors/$error'
     | '/settings/account'
     | '/settings/appearance'
@@ -314,9 +386,15 @@ export interface FileRouteTypes {
     | '/apps'
     | '/chats'
     | '/help-center'
+    | '/organizations'
     | '/settings/'
     | '/tasks'
     | '/users'
+    | '/organizations/$slug/$workspaceSlug'
+    | '/organizations/$slug/members'
+    | '/organizations/$slug/'
+    | '/organizations/$slug/$workspaceSlug/'
+    | '/organizations/$slug/$workspaceSlug/collections'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
@@ -342,9 +420,14 @@ export interface FileRouteTypes {
     | '/apps'
     | '/chats'
     | '/help-center'
+    | '/organizations'
     | '/settings'
     | '/tasks'
     | '/users'
+    | '/organizations/$slug/members'
+    | '/organizations/$slug'
+    | '/organizations/$slug/$workspaceSlug'
+    | '/organizations/$slug/$workspaceSlug/collections'
   id:
     | '__root__'
     | '/_authenticated'
@@ -363,6 +446,7 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/'
+    | '/_authenticated/organizations/$slug'
     | '/_authenticated/errors/$error'
     | '/_authenticated/settings/account'
     | '/_authenticated/settings/appearance'
@@ -374,9 +458,15 @@ export interface FileRouteTypes {
     | '/_authenticated/apps/'
     | '/_authenticated/chats/'
     | '/_authenticated/help-center/'
+    | '/_authenticated/organizations/'
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
     | '/_authenticated/users/'
+    | '/_authenticated/organizations/$slug/$workspaceSlug'
+    | '/_authenticated/organizations/$slug/members'
+    | '/_authenticated/organizations/$slug/'
+    | '/_authenticated/organizations/$slug/$workspaceSlug/'
+    | '/_authenticated/organizations/$slug/$workspaceSlug/collections/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -529,6 +619,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/organizations/': {
+      id: '/_authenticated/organizations/'
+      path: '/organizations'
+      fullPath: '/organizations'
+      preLoaderRoute: typeof AuthenticatedOrganizationsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/help-center/': {
       id: '/_authenticated/help-center/'
       path: '/help-center'
@@ -606,6 +703,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/organizations/$slug': {
+      id: '/_authenticated/organizations/$slug'
+      path: '/organizations/$slug'
+      fullPath: '/organizations/$slug'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/organizations/$slug/': {
+      id: '/_authenticated/organizations/$slug/'
+      path: '/'
+      fullPath: '/organizations/$slug/'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugIndexRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugRouteRoute
+    }
+    '/_authenticated/organizations/$slug/members': {
+      id: '/_authenticated/organizations/$slug/members'
+      path: '/members'
+      fullPath: '/organizations/$slug/members'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugMembersRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugRouteRoute
+    }
+    '/_authenticated/organizations/$slug/$workspaceSlug': {
+      id: '/_authenticated/organizations/$slug/$workspaceSlug'
+      path: '/$workspaceSlug'
+      fullPath: '/organizations/$slug/$workspaceSlug'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugRouteRoute
+    }
+    '/_authenticated/organizations/$slug/$workspaceSlug/': {
+      id: '/_authenticated/organizations/$slug/$workspaceSlug/'
+      path: '/'
+      fullPath: '/organizations/$slug/$workspaceSlug/'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute
+    }
+    '/_authenticated/organizations/$slug/$workspaceSlug/collections/': {
+      id: '/_authenticated/organizations/$slug/$workspaceSlug/collections/'
+      path: '/collections'
+      fullPath: '/organizations/$slug/$workspaceSlug/collections'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute
+    }
   }
 }
 
@@ -632,13 +771,54 @@ const AuthenticatedSettingsRouteRouteWithChildren =
     AuthenticatedSettingsRouteRouteChildren,
   )
 
+interface AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteChildren {
+  AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute
+}
+
+const AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteChildren: AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteChildren =
+  {
+    AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute:
+      AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute,
+    AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute:
+      AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute,
+  }
+
+const AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteWithChildren =
+  AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute._addFileChildren(
+    AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteChildren,
+  )
+
+interface AuthenticatedOrganizationsSlugRouteRouteChildren {
+  AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteWithChildren
+  AuthenticatedOrganizationsSlugMembersRoute: typeof AuthenticatedOrganizationsSlugMembersRoute
+  AuthenticatedOrganizationsSlugIndexRoute: typeof AuthenticatedOrganizationsSlugIndexRoute
+}
+
+const AuthenticatedOrganizationsSlugRouteRouteChildren: AuthenticatedOrganizationsSlugRouteRouteChildren =
+  {
+    AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute:
+      AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteWithChildren,
+    AuthenticatedOrganizationsSlugMembersRoute:
+      AuthenticatedOrganizationsSlugMembersRoute,
+    AuthenticatedOrganizationsSlugIndexRoute:
+      AuthenticatedOrganizationsSlugIndexRoute,
+  }
+
+const AuthenticatedOrganizationsSlugRouteRouteWithChildren =
+  AuthenticatedOrganizationsSlugRouteRoute._addFileChildren(
+    AuthenticatedOrganizationsSlugRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedOrganizationsSlugRouteRoute: typeof AuthenticatedOrganizationsSlugRouteRouteWithChildren
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
+  AuthenticatedOrganizationsIndexRoute: typeof AuthenticatedOrganizationsIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
 }
@@ -646,10 +826,13 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedOrganizationsSlugRouteRoute:
+    AuthenticatedOrganizationsSlugRouteRouteWithChildren,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
+  AuthenticatedOrganizationsIndexRoute: AuthenticatedOrganizationsIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
 }
