@@ -46,6 +46,10 @@ import { Route as AuthenticatedOrganizationsSlugMembersRouteImport } from './rou
 import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/route'
 import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugIndexRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/index'
 import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/collections/index'
+import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/route'
+import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/index'
+import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields'
+import { Route as AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRouteImport } from './routes/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -248,6 +252,42 @@ const AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute =
         AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute,
     } as any,
   )
+const AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute =
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteImport.update(
+    {
+      id: '/collections/$collectionSlug',
+      path: '/collections/$collectionSlug',
+      getParentRoute: () =>
+        AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute,
+    } as any,
+  )
+const AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRoute =
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRouteImport.update(
+    {
+      id: '/',
+      path: '/',
+      getParentRoute: () =>
+        AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute,
+    } as any,
+  )
+const AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRoute =
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRouteImport.update(
+    {
+      id: '/fields',
+      path: '/fields',
+      getParentRoute: () =>
+        AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute,
+    } as any,
+  )
+const AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRoute =
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRouteImport.update(
+    {
+      id: '/activity',
+      path: '/activity',
+      getParentRoute: () =>
+        AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute,
+    } as any,
+  )
 
 export interface FileRoutesByFullPath {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -283,7 +323,11 @@ export interface FileRoutesByFullPath {
   '/organizations/$slug/members': typeof AuthenticatedOrganizationsSlugMembersRoute
   '/organizations/$slug/': typeof AuthenticatedOrganizationsSlugIndexRoute
   '/organizations/$slug/$workspaceSlug/': typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute
+  '/organizations/$slug/$workspaceSlug/collections/$collectionSlug': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteWithChildren
   '/organizations/$slug/$workspaceSlug/collections': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute
+  '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRoute
+  '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRoute
+  '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -317,6 +361,9 @@ export interface FileRoutesByTo {
   '/organizations/$slug': typeof AuthenticatedOrganizationsSlugIndexRoute
   '/organizations/$slug/$workspaceSlug': typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute
   '/organizations/$slug/$workspaceSlug/collections': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute
+  '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRoute
+  '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRoute
+  '/organizations/$slug/$workspaceSlug/collections/$collectionSlug': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -356,7 +403,11 @@ export interface FileRoutesById {
   '/_authenticated/organizations/$slug/members': typeof AuthenticatedOrganizationsSlugMembersRoute
   '/_authenticated/organizations/$slug/': typeof AuthenticatedOrganizationsSlugIndexRoute
   '/_authenticated/organizations/$slug/$workspaceSlug/': typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute
+  '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteWithChildren
   '/_authenticated/organizations/$slug/$workspaceSlug/collections/': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute
+  '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRoute
+  '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRoute
+  '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/': typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -394,7 +445,11 @@ export interface FileRouteTypes {
     | '/organizations/$slug/members'
     | '/organizations/$slug/'
     | '/organizations/$slug/$workspaceSlug/'
+    | '/organizations/$slug/$workspaceSlug/collections/$collectionSlug'
     | '/organizations/$slug/$workspaceSlug/collections'
+    | '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity'
+    | '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields'
+    | '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
@@ -428,6 +483,9 @@ export interface FileRouteTypes {
     | '/organizations/$slug'
     | '/organizations/$slug/$workspaceSlug'
     | '/organizations/$slug/$workspaceSlug/collections'
+    | '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity'
+    | '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields'
+    | '/organizations/$slug/$workspaceSlug/collections/$collectionSlug'
   id:
     | '__root__'
     | '/_authenticated'
@@ -466,7 +524,11 @@ export interface FileRouteTypes {
     | '/_authenticated/organizations/$slug/members'
     | '/_authenticated/organizations/$slug/'
     | '/_authenticated/organizations/$slug/$workspaceSlug/'
+    | '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug'
     | '/_authenticated/organizations/$slug/$workspaceSlug/collections/'
+    | '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity'
+    | '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields'
+    | '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -745,6 +807,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRouteImport
       parentRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute
     }
+    '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug': {
+      id: '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug'
+      path: '/collections/$collectionSlug'
+      fullPath: '/organizations/$slug/$workspaceSlug/collections/$collectionSlug'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugRouteRoute
+    }
+    '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/': {
+      id: '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/'
+      path: '/'
+      fullPath: '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute
+    }
+    '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields': {
+      id: '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields'
+      path: '/fields'
+      fullPath: '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/fields'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute
+    }
+    '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity': {
+      id: '/_authenticated/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity'
+      path: '/activity'
+      fullPath: '/organizations/$slug/$workspaceSlug/collections/$collectionSlug/activity'
+      preLoaderRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRouteImport
+      parentRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute
+    }
   }
 }
 
@@ -771,8 +861,30 @@ const AuthenticatedSettingsRouteRouteWithChildren =
     AuthenticatedSettingsRouteRouteChildren,
   )
 
+interface AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteChildren {
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRoute
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRoute
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRoute
+}
+
+const AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteChildren: AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteChildren =
+  {
+    AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRoute:
+      AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugActivityRoute,
+    AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRoute:
+      AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugFieldsRoute,
+    AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRoute:
+      AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugIndexRoute,
+  }
+
+const AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteWithChildren =
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute._addFileChildren(
+    AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteChildren,
+  )
+
 interface AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteChildren {
   AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute
+  AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteWithChildren
   AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute: typeof AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute
 }
 
@@ -780,6 +892,8 @@ const AuthenticatedOrganizationsSlugWorkspaceSlugRouteRouteChildren: Authenticat
   {
     AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute:
       AuthenticatedOrganizationsSlugWorkspaceSlugIndexRoute,
+    AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRoute:
+      AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsCollectionSlugRouteRouteWithChildren,
     AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute:
       AuthenticatedOrganizationsSlugWorkspaceSlugCollectionsIndexRoute,
   }

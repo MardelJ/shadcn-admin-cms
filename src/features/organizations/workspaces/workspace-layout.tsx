@@ -36,12 +36,6 @@ export function WorkspaceLayout() {
 
     return (
         <>
-            <Header>
-                <div className='ms-auto flex items-center space-x-4'>
-                    <ThemeSwitch />
-                    <ProfileDropdown />
-                </div>
-            </Header>
 
             <Main>
                 <div className='mb-4 flex items-center gap-4'>

@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_authenticated/organizations/$slug')<{
         const organization = await context.queryClient.ensureQueryData({
             queryKey: ['organization', params.slug],
             queryFn: () =>
-                HttpClient.get<OrganizationResponse>(`/v1/organizations/ufsa`),
+                HttpClient.get<OrganizationResponse>(`/v1/organizations/${params.slug}`),
         })
         return { organization }
     },

@@ -2,7 +2,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { HttpClient } from '@/lib/axios-client'
 import { toast } from 'sonner'
-import { type UpdateWorkspaceRequest, type CreateWorkspaceRequest, type Workspace } from './data/schema'
+import { type UpdateWorkspaceRequest, type CreateWorkspaceRequest, type Workspace, type WorkspaceStats } from './data/schema'
 
 interface WorkspacesResponse {
     data: Workspace[]
@@ -12,6 +12,10 @@ interface WorkspaceResponse {
     data: Workspace
 }
 
+interface WorkspaceStatsResponse {
+    data: WorkspaceStats
+}
+
 // API functions
 async function getWorkspaces(orgSlug: string): Promise<WorkspacesResponse> {
     return HttpClient.get<WorkspacesResponse>(`/v1/organizations/${orgSlug}/workspaces`)
@@ -19,6 +23,10 @@ async function getWorkspaces(orgSlug: string): Promise<WorkspacesResponse> {
 
 async function getWorkspaceBySlug(orgSlug: string, workspaceSlug: string): Promise<WorkspaceResponse> {
     return HttpClient.get<WorkspaceResponse>(`/v1/organizations/${orgSlug}/workspaces/${workspaceSlug}`)
+}
+
+async function getWorkspaceStats(orgSlug: string, workspaceSlug: string): Promise<WorkspaceStatsResponse> {
+    return HttpClient.get<WorkspaceStatsResponse>(`/v1/organizations/${orgSlug}/workspaces/${workspaceSlug}/stats`)
 }
 
 async function createWorkspace(orgSlug: string, data: CreateWorkspaceRequest): Promise<WorkspaceResponse> {
@@ -64,6 +72,21 @@ export function useWorkspaceBySlug(orgSlug: string, workspaceSlug: string) {
     }
 }
 
+export function useWorkspaceStats(orgSlug: string, workspaceSlug: string) {
+    const { data, isLoading, error, refetch } = useQuery({
+        queryKey: ['workspace-stats', orgSlug, workspaceSlug],
+        queryFn: () => getWorkspaceStats(orgSlug, workspaceSlug),
+        enabled: !!orgSlug && !!workspaceSlug,
+    })
+
+    return {
+        stats: data?.data || null,
+        isLoading,
+        error,
+        refetch,
+    }
+}
+
 export function useCreateWorkspace(orgSlug: string) {
     const queryClient = useQueryClient()
 
@@ -74,6 +97,7 @@ export function useCreateWorkspace(orgSlug: string) {
             const previousWorkspaces = queryClient.getQueryData(['workspaces', orgSlug])
 
             queryClient.setQueryData(['workspaces', orgSlug], (old: WorkspacesResponse | undefined) => {
+                //@ts-expect-error not same type
                 const optimisticWorkspace: Workspace = {
                     id: 'temp-' + Date.now(),
                     ...newWorkspace,
@@ -110,7 +134,7 @@ export function useUpdateWorkspace(orgSlug: string) {
         onSuccess: (response, variables) => {
             queryClient.invalidateQueries({ queryKey: ['workspaces', orgSlug] })
             queryClient.invalidateQueries({ queryKey: ['workspace', orgSlug, variables.workspaceSlug] })
-            // If slug changed, invalidate new slug too
+            queryClient.invalidateQueries({ queryKey: ['workspace-stats', orgSlug, variables.workspaceSlug] })
             if (variables.workspaceSlug !== response.data.slug) {
                 queryClient.invalidateQueries({ queryKey: ['workspace', orgSlug, response.data.slug] })
             }
@@ -131,6 +155,7 @@ export function useDeleteWorkspace(orgSlug: string) {
         onSuccess: (_, workspaceSlug) => {
             queryClient.invalidateQueries({ queryKey: ['workspaces', orgSlug] })
             queryClient.removeQueries({ queryKey: ['workspace', orgSlug, workspaceSlug] })
+            queryClient.removeQueries({ queryKey: ['workspace-stats', orgSlug, workspaceSlug] })
             toast.success('Workspace deleted successfully!')
         },
         onError: (error: any) => {

@@ -25,7 +25,7 @@ export interface CreateWorkspaceRequest {
     name: string
     slug: string
     description?: string
-    settings?: Record<string, unknown>
+    settings?: Record<string, any>
 }
 
 export interface UpdateWorkspaceRequest {
@@ -33,4 +33,32 @@ export interface UpdateWorkspaceRequest {
     slug?: string
     description?: string | null
     settings?: Record<string, unknown>
+}
+
+export interface WorkspaceStats {
+    counts: {
+        collections: number
+        entries: number
+        publishedEntries: number
+        draftEntries: number
+        apiKeys: number
+        media: number
+        webhooks: number
+    }
+    recentEntries: {
+        id: string
+        title: string
+        status: string
+        collection: {
+            name: string
+            slug: string
+        }
+        updatedAt: string
+    }[]
+    collections: {
+        id: string
+        name: string
+        slug: string
+        entriesCount: number
+    }[]
 }

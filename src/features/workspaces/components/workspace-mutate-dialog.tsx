@@ -53,12 +53,12 @@ export function WorkspaceMutateDialog({
     currentRow,
 }: WorkspaceMutateDialogProps) {
     const isUpdate = !!currentRow
-    const createWorkspace = useCreateWorkspace()
-    const updateWorkspace = useUpdateWorkspace()
 
     const { organization } = useLoaderData({
         from: '/_authenticated/organizations/$slug',
     })
+    const createWorkspace = useCreateWorkspace(organization.data.slug)
+    const updateWorkspace = useUpdateWorkspace(organization.data.slug)
 
     const form = useForm<WorkspaceForm>({
         resolver: zodResolver(formSchema),

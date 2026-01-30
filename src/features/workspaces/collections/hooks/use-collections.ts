@@ -1,5 +1,3 @@
-// hooks/use-collections.ts
-
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { HttpClient } from '@/lib/axios-client'
 import { toast } from 'sonner'
@@ -244,4 +242,33 @@ export function useDeleteCollection(orgSlug: string, workspaceSlug: string) {
             toast.error(message)
         },
     })
+}
+
+export interface CollectionActivity {
+    id: string
+    action: string
+    entryId: string
+    entryTitle: string
+    createdAt: Date
+}
+interface CollectionActivityResponse {
+    data: CollectionActivity[]
+}
+
+export function useCollectionActivity(orgSlug: string, workspaceSlug: string, collectionSlug: string) {
+    const { data, isLoading, error, refetch } = useQuery({
+        queryKey: ['collection-activity', orgSlug, workspaceSlug, collectionSlug],
+        queryFn: () =>
+            HttpClient.get<CollectionActivityResponse>(
+                `/v1/organizations/${orgSlug}/workspaces/${workspaceSlug}/collections/${collectionSlug}/activity`
+            ),
+        enabled: !!orgSlug && !!workspaceSlug && !!collectionSlug,
+    })
+
+    return {
+        activities: data?.data || [],
+        isLoading,
+        error,
+        refetch,
+    }
 }

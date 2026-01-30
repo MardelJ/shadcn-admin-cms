@@ -13,9 +13,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { SignOutDialog } from '@/components/sign-out-dialog'
+import { useGetMe } from '@/features/users/data/hooks/use-users'
 
 export function ProfileDropdown() {
   const [open, setOpen] = useDialogState()
+
+  const { user, refetch, isLoading, error } = useGetMe()
+
+  function getInitials(name: string) {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
+  }
 
   return (
     <>
@@ -23,17 +35,17 @@ export function ProfileDropdown() {
         <DropdownMenuTrigger asChild>
           <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
             <Avatar className='h-8 w-8'>
-              <AvatarImage src='/avatars/01.png' alt='@shadcn' />
-              <AvatarFallback>SN</AvatarFallback>
+              <AvatarImage src={user?.avatarUrl} alt='@shadcn' />
+              <AvatarFallback>{getInitials(user?.fullName || '')}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-56' align='end' forceMount>
           <DropdownMenuLabel className='font-normal'>
             <div className='flex flex-col gap-1.5'>
-              <p className='text-sm leading-none font-medium'>satnaing</p>
+              <p className='text-sm leading-none font-medium'>{user?.fullName}</p>
               <p className='text-muted-foreground text-xs leading-none'>
-                satnaingdev@gmail.com
+                {user?.email}
               </p>
             </div>
           </DropdownMenuLabel>

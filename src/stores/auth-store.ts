@@ -44,14 +44,14 @@ export const useAuthStore = create<AuthState>()((set) => {
       accessToken: initAccessToken,
       setAccessToken: (accessToken) =>
         set((state) => {
-          setCookie(ACCESS_TOKEN, JSON.stringify(accessToken))
+          setCookie(ACCESS_TOKEN, accessToken)
           return { ...state, auth: { ...state.auth, accessToken } }
         }),
 
       refreshToken: initRefreshToken,
       setRefreshToken: (refreshToken) =>
         set((state) => {
-          setCookie(REFRESH_TOKEN, JSON.stringify(refreshToken))
+          setCookie(REFRESH_TOKEN, refreshToken)
           return { ...state, auth: { ...state.auth, refreshToken } }
         }),
 

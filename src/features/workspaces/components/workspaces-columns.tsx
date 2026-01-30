@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { DataTableColumnHeader } from '@/components/data-table'
-import { MoreHorizontal, Pencil, Trash } from 'lucide-react'
+import { Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 import { type Workspace } from '../data/schema'
 
@@ -128,6 +128,7 @@ export function useWorkspacesColumns(organizationSlug: string): ColumnDef<Worksp
                                     to='/organizations/$slug/$workspaceSlug'
                                     params={{ slug: organizationSlug, workspaceSlug: workspace.slug }}
                                 >
+                                    <Eye className='mr-2 h-4 w-4' />
                                     View Details
                                 </Link>
                             </DropdownMenuItem>

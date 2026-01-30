@@ -1,18 +1,12 @@
-import { Link } from '@tanstack/react-router'
 import {
-  BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
-  Sparkles,
 } from 'lucide-react'
 import useDialogState from '@/hooks/use-dialog-state'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -26,13 +20,10 @@ import {
 } from '@/components/ui/sidebar'
 import { SignOutDialog } from '@/components/sign-out-dialog'
 import { useAuthStore } from '@/stores/auth-store'
+import { type User } from '@/features/users/data/hooks/use-users'
 
 type NavUserProps = {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
+  user: User | null
 }
 
 export function NavUser({ user }: NavUserProps) {
@@ -85,11 +76,11 @@ export function NavUser({ user }: NavUserProps) {
               <DropdownMenuLabel className='p-0 font-normal'>
                 <div className='flex items-center gap-2 px-1 py-1.5 text-start text-sm'>
                   <Avatar className='h-8 w-8 rounded-lg'>
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className='rounded-lg'>SN</AvatarFallback>
+                    <AvatarImage src={user.avatarUrl} alt={user.fullName} />
+                    <AvatarFallback className='rounded-lg'>{getInitials(user.fullName)}</AvatarFallback>
                   </Avatar>
                   <div className='grid flex-1 text-start text-sm leading-tight'>
-                    <span className='truncate font-semibold'>{user.name}</span>
+                    <span className='truncate font-semibold'>{user.fullName}</span>
                     <span className='truncate text-xs'>{user.email}</span>
                   </div>
                 </div>
